@@ -28,36 +28,33 @@ ui <- fluidPage(
             # HTML formatting
             tags$div(class="header", checked=NA, 
                      tags$h2("Instructions"),
-                     tags$p("Select the quiz you want to take from the menu below, then select the number of questions to answer.
-                            This is a multiple choice quiz to practice the GRE General Test. Type the letter of your answer choice (or multiple if applicable),
-                            No tests in this program are timed. You will receive immediate feedback if your choice is correct or not.
-                            You may want scratch paper and a pencil for the math quiz."),
-                     tags$h4("Credits"),
-                     tags$p("Practice GRE Math, Vocabulary, and Verbal Reasoning Quizzes."),
-                     tags$p("Authors: Julia Griner and Sarah Gillespie"),
-                     tags$p("Disclaimer: Questions are taken from various online sources, as credited on the README. This program is purely for educational purposes.")
-            ) # end div
+                     tags$p("add here."),
+                     tags$h4("Emergency Kit Builder."),
+                     tags$p("Author:  Sarah Gillespie")
+                     ) # end div
         ), # end sidebar panel
 
      mainPanel(
          
-         # SG: TASK: randomize the question order
-         # SG: TASK: add the score counter.
-         selectInput("quiz", "Select a quiz",
-                    c("Math", "Vocabulary", "Verbal Reasoning", "Spanish Nature")
-         ),
-         textOutput("result"),
-         
-         # choose number of questions to answer
-         numericInput("num_questions",
-                      "Number of questions",
-                      1, min = 1, max = 100), # fix to be max items in the csv file
-         
-         textInput("entered_answer", "Enter the answer to display below:"),
+         # enter your zip code.
+         # swap to be numbers only?
+         textInput("entered_zipcode", "Enter your zipcode:"),
          textOutput("text")
          
-        ) # end main panel
+        ) # end main panel 1
      
+     # mainPanel(
+     #     # add links to the typical items and where to purchase.
+     #     # recommend people buy locally.
+     #     # this is where recommendations are made
+     #     
+     # ), # end main panel 1
+     # 
+     # mainPanel(
+     #     # add links to other resources
+     #     
+     # ) # end main panel 1
+     # 
      
     )
 )# end of UI
@@ -67,21 +64,14 @@ server <- function(input, output, session) {
 
     
     output$result <- renderText({
-        paste("You chose", input$quiz)
+        paste("You chose", input$entered_zipcode)
+        # add zipcodes coordinates and general weather?
+        # is there a way to scrape this from someone? I would rather not hardcode a CSV file of it.
+        
     })
     
     
-    # drop down option for the quiz type
-    quizInput <- reactive({
-        switch(input$quiz,
-               "Math" = math_quiz,
-               "Vocabulary" = vocab_quiz,
-               "Verbal Reasoning" = verbal_quiz,
-               "Spanish Nature" = spanish_nature)
-    })
-    
-    output$text <- renderText({ input$entered_answer })
-    output$verb <- renderText({ input$entered_answer })
+    output$text <- renderText({ input$entered_zipcode })
     
 } # end of server function
 
